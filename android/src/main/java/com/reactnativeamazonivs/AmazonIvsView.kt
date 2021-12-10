@@ -2,6 +2,8 @@ package com.amazonivsreactnative
 
 import android.net.Uri
 import android.widget.FrameLayout
+import android.view.Gravity
+
 import com.amazonaws.ivs.player.*
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.LifecycleEventListener
@@ -99,12 +101,13 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     val layoutParams = LayoutParams(this.height * 9 / 16, this.height)
     val widthProportional = this.height * 9 / 16
     layoutParams.gravity = Gravity.FILL_VERTICAL
-
-    playerView.translationX = ((this.width - widthProportional).toFloat() / 2)
-    playerView.layoutParams = layoutParams
-    playerView.bottom = this.height
-    playerView.right = widthProportional
-
+    
+    if (preview !=null) {
+      playerView.translationX = ((this.width - widthProportional).toFloat() / 2)
+      playerView.layoutParams = layoutParams
+      playerView.bottom = this.height
+      playerView.right = widthProportional
+    }
     addView(playerView)
 
     playerObserver = Timer("observerInterval", false)
