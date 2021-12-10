@@ -48,7 +48,16 @@ class AmazonIvsView: UIView, IVSPlayer.Delegate {
         super.init(frame: frame)
 
         self.addSubview(self.playerView)
-        self.playerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
+        // https://github.com/aws/amazon-ivs-react-native/issues/12
+        // 위 이슈가 해결되면 필요 없음
+        // 해결이 되면 해당 코드를 ivs-publisher로 역수입.
+        // self.playerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        self.playerView.translatesAutoresizingMaskIntoConstraints = false
+        self.playerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        self.playerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        self.playerView.heightAnchor.constraint(equalToConstant: self.frame.height).isActive = true
+        
         self.addProgressObserver()
         self.addPlayerObserver()
         self.addTimePointObserver()
