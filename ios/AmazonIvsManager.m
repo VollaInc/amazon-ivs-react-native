@@ -31,7 +31,6 @@ RCT_EXPORT_VIEW_PROPERTY(onTextMetadataCue, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onProgress, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onTimePoint, RCTDirectEventBlock)
-@end
 
 
 - (dispatch_queue_t)methodQueue {
@@ -42,3 +41,5 @@ RCT_EXPORT_VIEW_PROPERTY(onTimePoint, RCTDirectEventBlock)
 {
     return YES;
 }
+
+@end
