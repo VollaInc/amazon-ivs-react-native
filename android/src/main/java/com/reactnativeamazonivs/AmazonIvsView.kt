@@ -98,17 +98,17 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     // https://github.com/aws/amazon-ivs-react-native/issues/12
     // 위 이슈가 해결되면 필요 없음
     // 해결이 되면 해당 코드를 ivs-publisher로 역수입.
-    val layoutParams = LayoutParams(this.height * 9 / 16, this.height)
-    val widthProportional = this.height * 9 / 16
-    layoutParams.gravity = Gravity.FILL_VERTICAL
+    // val layoutParams = LayoutParams(this.height * 9 / 16, this.height)
+    // val widthProportional = this.height * 9 / 16
+    // layoutParams.gravity = Gravity.FILL_VERTICAL
 
-    if (playerView !=null) {
-      playerView!!.translationX = ((this.width - widthProportional).toFloat() / 2)
-      playerView!!.layoutParams = layoutParams
-      playerView!!.bottom = this.height
-      playerView!!.right = widthProportional
-    }
-    addView(playerView)
+    // if (playerView !=null) {
+    //   playerView!!.translationX = ((this.width - widthProportional).toFloat() / 2)
+    //   playerView!!.layoutParams = layoutParams
+    //   playerView!!.bottom = this.height
+    //   playerView!!.right = widthProportional
+    // }
+    // addView(playerView)
 
     playerObserver = Timer("observerInterval", false)
     playerObserver?.schedule(timerTask {
@@ -253,7 +253,7 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     measure(
       MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
       MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
-    layout(left, top, right, bottom)
+    // layout(left, top, right, bottom)
   }
 
   fun play() {

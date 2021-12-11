@@ -1,5 +1,5 @@
 PODS:
-  - amazon-ivs-react-native (1.0.2-beta):
+  - amazon-ivs-react-native (1.0.2-beta.v3):
     - AmazonIVSPlayer (~> 1.6.0)
     - React-Core
   - AmazonIVSPlayer (1.6.0)
@@ -475,7 +475,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  amazon-ivs-react-native: 42e429db84546911b7e93ef5213036a8008eb404
+  amazon-ivs-react-native: 7cebcd6ebe1fb858e5b02c9728972f394ea37428
   AmazonIVSPlayer: ffb432b2359faad4d6e91c5c4b9bbe726d42c5af
   AppCenter: 883369ab78427b0561c688158d689dfe1f993ea9
   appcenter-analytics: 2a8a55d2feba193c3c8a51b9902ef4757386414e
@@ -485,7 +485,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 1831018586744871ebc94d041d338e25ccebceb1
+  FBReactNativeSpec: d83fd664a8f4e8f899ca1b2637d0f54e0e1fd7bd
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 6d3e854f0e7260a648badd0d44fc364bc9da9728
@@ -523,4 +523,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c9f5c23ae17a7b40dd6569a4c7b17bc313625a84
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
