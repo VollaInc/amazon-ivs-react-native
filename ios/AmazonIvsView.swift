@@ -57,7 +57,8 @@ class AmazonIvsView: UIView, IVSPlayer.Delegate {
         self.playerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         self.playerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         self.playerView.heightAnchor.constraint(equalToConstant: self.frame.height).isActive = true
-        
+        self.playerView.widthAnchor.constraint(equalTo: self.playerView.heightAnchor, multiplier: 3 / 4).isActive = true
+
         self.addProgressObserver()
         self.addPlayerObserver()
         self.addTimePointObserver()
