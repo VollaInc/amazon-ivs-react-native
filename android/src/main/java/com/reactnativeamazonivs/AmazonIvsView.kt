@@ -15,6 +15,7 @@ import java.lang.Double.POSITIVE_INFINITY
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.timerTask
+import kotlin.math.ceil
 
 class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(context), LifecycleEventListener {
   private var playerView: PlayerView? = null
@@ -26,6 +27,8 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
   private var lastLiveLatency: Long? = null
   private var lastBitrate: Long? = null
   private var lastDuration: Long? = null
+    
+  private val screenRatio = width.toFloat() / height.toFloat()
 
   enum class Events(private val mName: String) {
     STATE_CHANGED("onPlayerStateChange"),
@@ -98,17 +101,12 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     // https://github.com/aws/amazon-ivs-react-native/issues/12
     // 위 이슈가 해결되면 필요 없음
     // 해결이 되면 해당 코드를 ivs-publisher로 역수입.
-    // val layoutParams = LayoutParams(this.height * 9 / 16, this.height)
-    // val widthProportional = this.height * 9 / 16
-    // layoutParams.gravity = Gravity.FILL_VERTICAL
 
-    // if (playerView !=null) {
-    //   playerView!!.translationX = ((this.width - widthProportional).toFloat() / 2)
-    //   playerView!!.layoutParams = layoutParams
-    //   playerView!!.bottom = this.height
-    //   playerView!!.right = widthProportional
-    // }
-    // addView(playerView)
+    val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+    layoutParams.gravity = Gravity.CENTER
+    playerView?.layoutParams = layoutParams
+    playerView?.clipChildren = false
+    addView(playerView)
 
     playerObserver = Timer("observerInterval", false)
     playerObserver?.schedule(timerTask {
@@ -249,11 +247,49 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, Events.PROGRESS.toString(), data)
   }
 
+
+  private fun onVLayoutChange(){
+    val q = player!!.quality
+    val aspectRatio = q.width.toFloat() / q.height.toFloat()
+    if (aspectRatio == screenRatio){
+      measure(
+        MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+        MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+      )
+    }
+    if (aspectRatio > screenRatio) {
+      val modWidth = ceil(
+        height.times(
+          aspectRatio
+        )
+      ).toInt()
+
+      layoutParams?.width = modWidth
+      layoutParams?.height = height
+      measure(
+        MeasureSpec.makeMeasureSpec(modWidth, MeasureSpec.EXACTLY),
+        MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+      )
+    }else{
+      val modHeight = ceil(
+        width.times(
+          aspectRatio
+        )
+      ).toInt()
+
+      layoutParams?.width = width
+      layoutParams?.height = modHeight
+      measure(
+        MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+        MeasureSpec.makeMeasureSpec(modHeight, MeasureSpec.EXACTLY)
+      )
+    }
+
+    layout(left, top, right, bottom)
+  }
+
   private val mLayoutRunnable = Runnable {
-    measure(
-      MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-      MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
-    // layout(left, top, right, bottom)
+    onVLayoutChange()
   }
 
   fun play() {
@@ -280,6 +316,7 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
         reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, Events.LOAD.toString(), onLoadData)
       }
       Player.State.READY -> {
+        onVLayoutChange()
         val data = Arguments.createMap()
         val playerData = Arguments.createMap()
         playerData.putString("version", player?.version)
