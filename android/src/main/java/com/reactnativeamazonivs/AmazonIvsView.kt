@@ -28,8 +28,6 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
   private var lastBitrate: Long? = null
   private var lastDuration: Long? = null
     
-  private val screenRatio = width.toFloat() / height.toFloat()
-
   enum class Events(private val mName: String) {
     STATE_CHANGED("onPlayerStateChange"),
     DURATION_CHANGED("onDurationChange"),
@@ -251,6 +249,7 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
   private fun onVLayoutChange(){
     val q = player!!.quality
     val aspectRatio = q.width.toFloat() / q.height.toFloat()
+    val screenRatio = width.toFloat() / height.toFloat()
     if (aspectRatio == screenRatio){
       measure(
         MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
