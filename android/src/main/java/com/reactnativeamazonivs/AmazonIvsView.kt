@@ -259,7 +259,7 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
         MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
       )
     }
-    if (aspectRatio > screenRatio) {
+    if (aspectRatio >= 1 && aspectRatio > screenRatio || aspectRatio < 1 && aspectRatio < screenRatio) {
       val modWidth = ceil(
         height.times(
           aspectRatio
