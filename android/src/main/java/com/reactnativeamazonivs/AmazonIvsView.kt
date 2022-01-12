@@ -253,23 +253,24 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, Events.PROGRESS.toString(), data)
   }
 
+  private val metric = context.resources.displayMetrics
 
-  private fun onVLayoutChange(){
+  private fun onVLayoutChange(newWidth: Int = metric.widthPixels, newHeight: Int = metric.heightPixels){
     val q = player!!.quality
     val aspectRatio = q.width.toFloat() / q.height.toFloat()
-    val screenRatio = width.toFloat() / height.toFloat()
-    var modWidth = width;
-    var modHeight = height;
+    val screenRatio = newWidth.toFloat() / newHeight.toFloat()
+    var modWidth = newWidth;
+    var modHeight = newHeight;
 
     if (aspectRatio >= 1 && aspectRatio > screenRatio || aspectRatio < 1 && aspectRatio < screenRatio) {
       modWidth = ceil(
-        height.times(
+        modHeight.times(
           aspectRatio
         )
       ).toInt() + 50
     }else{
       modHeight = ceil(
-        width.times(
+        modWidth.times(
           aspectRatio
         )
       ).toInt() + 50
@@ -283,7 +284,7 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
       MeasureSpec.makeMeasureSpec(modHeight, MeasureSpec.EXACTLY)
     )
 
-    this.playerView?.layoutParams = LayoutParams(modWidth, modHeight)
+    this.playerView?.layoutParams = LayoutParams(modWidth, modHeight, Gravity.CENTER)
 
     layout(left, top, right, bottom)
   }
