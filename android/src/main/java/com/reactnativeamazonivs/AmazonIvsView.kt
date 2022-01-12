@@ -258,39 +258,32 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     val q = player!!.quality
     val aspectRatio = q.width.toFloat() / q.height.toFloat()
     val screenRatio = width.toFloat() / height.toFloat()
-    if (aspectRatio == screenRatio){
-      measure(
-        MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-        MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
-      )
-    }
+    var modWidth = width;
+    var modHeight = height;
+
     if (aspectRatio >= 1 && aspectRatio > screenRatio || aspectRatio < 1 && aspectRatio < screenRatio) {
-      val modWidth = ceil(
+      modWidth = ceil(
         height.times(
           aspectRatio
         )
       ).toInt() + 50
-
-      layoutParams?.width = modWidth
-      layoutParams?.height = height
-      measure(
-        MeasureSpec.makeMeasureSpec(modWidth, MeasureSpec.EXACTLY),
-        MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
-      )
     }else{
-      val modHeight = ceil(
+      modHeight = ceil(
         width.times(
           aspectRatio
         )
       ).toInt() + 50
-
-      layoutParams?.width = width
-      layoutParams?.height = modHeight
-      measure(
-        MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-        MeasureSpec.makeMeasureSpec(modHeight, MeasureSpec.EXACTLY)
-      )
     }
+
+    layoutParams?.width = modWidth
+    layoutParams?.height = modHeight
+
+    measure(
+      MeasureSpec.makeMeasureSpec(modWidth, MeasureSpec.EXACTLY),
+      MeasureSpec.makeMeasureSpec(modHeight, MeasureSpec.EXACTLY)
+    )
+
+    this.playerView?.layoutParams = LayoutParams(modWidth, modHeight)
 
     layout(left, top, right, bottom)
   }
