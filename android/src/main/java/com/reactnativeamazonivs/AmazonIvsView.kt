@@ -255,23 +255,18 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
 
   private fun onVLayoutChange(newWidth: Int = width, newHeight: Int = height){
     val q = player!!.quality
+    val aaW = newWidth.toFloat() / q.width.toFloat()
+    val aaH = newHeight.toFloat() / q.height.toFloat()
+
     val aspectRatio = q.width.toFloat() / q.height.toFloat()
-    val screenRatio = newWidth.toFloat() / newHeight.toFloat()
+
     var modWidth = newWidth;
     var modHeight = newHeight;
 
-    if (aspectRatio >= 1 && aspectRatio > screenRatio || aspectRatio < 1 && aspectRatio < screenRatio) {
-      modWidth = ceil(
-        modHeight.times(
-          aspectRatio
-        )
-      ).toInt() + 10
+    if (aaH >= aaW) {
+      modWidth = ceil(modHeight.times(aspectRatio)).toInt() + 20
     }else{
-      modHeight = ceil(
-        modWidth.times(
-          aspectRatio
-        )
-      ).toInt() + 10
+      modHeight = ceil(modWidth.times(aspectRatio)).toInt() + 20
     }
 
     layoutParams?.width = modWidth
