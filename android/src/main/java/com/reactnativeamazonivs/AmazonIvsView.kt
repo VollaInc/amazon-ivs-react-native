@@ -28,6 +28,9 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
   private var lastDuration: Long? = null
   private var finishedLoading: Boolean = false
 
+  private var initialWidth: Int = right - left
+  private var initialHeight: Int = bottom - top
+
   enum class Events(private val mName: String) {
     STATE_CHANGED("onPlayerStateChange"),
     DURATION_CHANGED("onDurationChange"),
