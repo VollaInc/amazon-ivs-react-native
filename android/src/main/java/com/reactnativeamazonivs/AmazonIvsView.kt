@@ -253,22 +253,25 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
     reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, Events.PROGRESS.toString(), data)
   }
 
-  private fun onVLayoutChange(newWidth: Int = width, newHeight: Int = height){
+  private fun onVLayoutChange(newWidth: Int = width, newHeight: Int = height, aspect: Int = 0){
     val q = player!!.quality
+    if (( newWidth != initialWidth && newHeight == initialHeight) || ( newWidth == initialWidth && newHeight != initialHeight) ) {return;}
+
     val aaW = newWidth.toFloat() / q.width.toFloat()
     val aaH = newHeight.toFloat() / q.height.toFloat()
 
     val aspectRatio = q.width.toFloat() / q.height.toFloat()
+    val aspectDet = if(aspect == 0) (aaH >= aaW) else (aaH <= aaW)
 
     var modWidth = newWidth;
     var modHeight = newHeight;
 
-    if (aaH >= aaW) {
-      modWidth = ceil(modHeight.times(aspectRatio)).toInt() + 20
+    if (aspectDet) {
+      modWidth = ceil(modHeight.times(aspectRatio)).toInt() + 10
     }else{
-      modHeight = ceil(modWidth.times(aspectRatio)).toInt() + 20
+      modHeight = ceil(modWidth.times(aspectRatio)).toInt() + 10
     }
-
+    
     layoutParams?.width = modWidth
     layoutParams?.height = modHeight
 
@@ -284,6 +287,14 @@ class AmazonIvsView(private val context: ThemedReactContext) : FrameLayout(conte
 
   private val mLayoutRunnable = Runnable {
     onVLayoutChange()
+  }
+
+  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    if (!changed || height != bottom - top && width != right - left) {
+      initialWidth = right - left
+      initialHeight = bottom - top
+    }
+    super.onLayout(changed, left, top, right, bottom)
   }
 
   fun play() {
