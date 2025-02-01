@@ -520,6 +520,7 @@ class AmazonIvsView: UIView, IVSPlayer.Delegate {
 
         self.pipController = pipController
         pipController.canStartPictureInPictureAutomaticallyFromInline = self.pipEnabled
+        pipController.delegate = self
 
     }
 }
