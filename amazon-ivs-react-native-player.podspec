@@ -27,5 +27,5 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React-Core"
-  s.dependency "AmazonIVSPlayer", "~> 1.36.1"
+  s.dependency "AmazonIVSPlayer", "~> 1.36.0"
 end
