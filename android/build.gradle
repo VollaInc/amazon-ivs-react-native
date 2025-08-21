@@ -7,7 +7,6 @@ buildscript {
   repositories {
     google()
     mavenCentral()
-    google()
   }
 
   dependencies {
@@ -17,6 +16,13 @@ buildscript {
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+def ivs_version = getExtOrDefault('ivsVersion')
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") &&  rootProject.getProperty("newArchEnabled") == "true"
 }
 
 apply plugin: 'com.android.library'
@@ -142,22 +148,12 @@ repositories {
   }
 }
 
-def kotlin_version = getExtOrDefault('kotlinVersion')
-def ivs_version = getExtOrDefault('ivsVersion')
-
-def isNewArchitectureEnabled() {
-  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
-}
-
-if (isNewArchitectureEnabled()) {
-  apply plugin: "com.facebook.react"
-  
+if (isNewArchitectureEnabled()) {  
   react {
     libraryName = "IVSPlayer"
     codegenJavaPackageName = "com.amazonaws.ivs.reactnative.player"
     jsRootDir = file("../src")
-    reactNativeDir = rootProject.file("../node_modules/react-native/")
-    codegenDir = rootProject.file("../node_modules/@react-native/codegen/")
+    codegenDir = file("../node_modules/@react-native/codegen/")
   }
 }
 
