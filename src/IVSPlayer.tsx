@@ -5,7 +5,6 @@ import React, {
   useRef,
 } from 'react';
 import {
-  requireNativeComponent,
   ViewStyle,
   StyleSheet,
   UIManager,
@@ -26,6 +25,8 @@ import type {
   Source,
 } from './types';
 import { createSourceWrapper } from './source';
+import IVSPlayerNativeComponent from './IVSPlayerNativeComponent';
+import NativeIVSPlayerSpec from './NativeIVSPlayerSpec';
 
 type IVSPlayerProps = {
   style?: ViewStyle;
@@ -76,9 +77,7 @@ type IVSPlayerProps = {
   onTimePoint?(event: NativeSyntheticEvent<{ position: number }>): void;
 };
 
-const VIEW_NAME = 'AmazonIvs';
-
-const IVSPlayer = requireNativeComponent<IVSPlayerProps>(VIEW_NAME);
+const IVSPlayer = IVSPlayerNativeComponent as any;
 
 export type Props = {
   style?: ViewStyle;
@@ -176,76 +175,69 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const preload = useCallback((url: string) => {
       const sourceWrapper = createSourceWrapper(url);
-
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.preload,
-        [sourceWrapper.getId(), sourceWrapper.getUri()]
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.preloadSource(viewTag, sourceWrapper.getId(), sourceWrapper.getUri());
+      }
 
       return sourceWrapper;
     }, []);
 
     const loadSource = useCallback((source: Source) => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.loadSource,
-        [source.getId()]
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.loadSource(viewTag, source.getId());
+      }
     }, []);
 
     const releaseSource = useCallback((source: Source) => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.releaseSource,
-        [source.getId()]
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.releaseSource(viewTag, source.getId());
+      }
     }, []);
 
     const play = useCallback(() => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.play,
-        []
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.play(viewTag);
+      }
     }, []);
 
     const pause = useCallback(() => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.pause,
-        []
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.pause(viewTag);
+      }
     }, []);
 
     const seekTo = useCallback((value: number) => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.seekTo,
-        [value]
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.seekTo(viewTag, value);
+      }
     }, []);
 
     const setOrigin = useCallback((value: string) => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.setOrigin,
-        [value]
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.setOrigin(viewTag, value);
+      }
     }, []);
 
     const togglePip = useCallback(() => {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(mediaPlayerRef.current),
-
-        UIManager.getViewManagerConfig(VIEW_NAME).Commands.togglePip,
-        []
-      );
+      const viewTag = findNodeHandle(mediaPlayerRef.current);
+      
+      if (viewTag != null) {
+        NativeIVSPlayerSpec.togglePip(viewTag);
+      }
     }, []);
 
     useEffect(() => {

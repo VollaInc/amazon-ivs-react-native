@@ -21,6 +21,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.facebook.react'
 
 def getExtOrDefault(name) {
   return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['AmazonIvs_' + name]
@@ -37,13 +38,30 @@ def sdk_version = pkgData.version
 android {
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
   buildToolsVersion getExtOrDefault('buildToolsVersion')
+  namespace "com.amazonaws.ivs.reactnative.player"
+  
   defaultConfig {
     minSdkVersion 21
     targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
     versionCode 1
     versionName sdk_version
     manifestPlaceholders = [sdkVersion:sdk_version]
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
   }
+  
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += [
+          "src/newarch",
+          "${buildDir}/generated/source/codegen/java"
+        ]
+      } else {
+        java.srcDirs += ["src/oldarch"]
+      }
+    }
+  }
+  
   buildTypes {
     release {
       minifyEnabled false
@@ -126,6 +144,22 @@ repositories {
 
 def kotlin_version = getExtOrDefault('kotlinVersion')
 def ivs_version = getExtOrDefault('ivsVersion')
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+  
+  react {
+    libraryName = "IVSPlayer"
+    codegenJavaPackageName = "com.amazonaws.ivs.reactnative.player"
+    jsRootDir = file("../src")
+    reactNativeDir = rootProject.file("../node_modules/react-native/")
+    codegenDir = rootProject.file("../node_modules/@react-native/codegen/")
+  }
+}
 
 dependencies {
   // noinspection GradleDynamicVersion
