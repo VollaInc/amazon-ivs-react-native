@@ -23,7 +23,6 @@
     "reset": "git clean -xdfe .vscode && yarn && yarn prepare",
     "markbuild": "tsx ./scripts/example-dot-env.ts",
     "prepare": "bob build && yarn markbuild",
-    "postinstall": "husky",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
