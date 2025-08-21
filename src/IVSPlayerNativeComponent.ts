@@ -37,52 +37,45 @@ export interface NativeProps extends ViewProps {
   
   // Events
   onSeek?: DirectEventHandler<Readonly<{ position: Double }>>;
-  onData?: DirectEventHandler<Readonly<{ playerData: Readonly<{
-    qualities?: ReadonlyArray<Readonly<{
-      name?: string;
-      codecs?: string;
-      bitrate?: Int32;
-      framerate?: Double;
-      width?: Int32;
-      height?: Int32;
-    }>>;
+  onData?: DirectEventHandler<Readonly<{ 
+    qualities?: string;
     version?: string;
     sessionId?: string;
-  }> }>>;
-  onVideoStatistics?: DirectEventHandler<Readonly<{ videoData: Readonly<{
+  }>>;
+  onVideoStatistics?: DirectEventHandler<Readonly<{
     duration?: Double;
     framesDecoded?: Int32;
     framesDropped?: Int32;
     bitrate?: Double;
-  }> }>>;
+  }>>;
   onPlayerStateChange?: DirectEventHandler<Readonly<{ state: string }>>;
   onDurationChange?: DirectEventHandler<Readonly<{ duration?: Double }>>;
-  onQualityChange?: DirectEventHandler<Readonly<{ quality: Readonly<{
+  onQualityChange?: DirectEventHandler<Readonly<{
     name?: string;
     codecs?: string;
     bitrate?: Int32;
     framerate?: Double;
     width?: Int32;
     height?: Int32;
-  }> }>>;
+  }>>;
   onPipChange?: DirectEventHandler<Readonly<{ active: boolean }>>;
   onRebuffering?: DirectEventHandler<Readonly<{}>>;
   onLoadStart?: DirectEventHandler<Readonly<{}>>;
   onLoad?: DirectEventHandler<Readonly<{ duration?: Double }>>;
   onLiveLatencyChange?: DirectEventHandler<Readonly<{ liveLatency: Double }>>;
-  onTextCue?: DirectEventHandler<Readonly<{ textCue: Readonly<{
+  onTextCue?: DirectEventHandler<Readonly<{
     type?: string;
     line?: Int32;
     size?: Int32;
     position?: Int32;
     text?: string;
     textAlign?: string;
-  }> }>>;
-  onTextMetadataCue?: DirectEventHandler<Readonly<{ textMetadataCue: Readonly<{
+  }>>;
+  onTextMetadataCue?: DirectEventHandler<Readonly<{
     type?: string;
     text?: string;
     textDescription?: string;
-  }> }>>;
+  }>>;
   onProgress?: DirectEventHandler<Readonly<{ position: Double }>>;
   onError?: DirectEventHandler<Readonly<{ error: string }>>;
   onTimePoint?: DirectEventHandler<Readonly<{ position: Double }>>;

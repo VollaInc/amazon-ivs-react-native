@@ -176,9 +176,13 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
     const preload = useCallback((url: string) => {
       const sourceWrapper = createSourceWrapper(url);
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
-        NativeIVSPlayerSpec.preloadSource(viewTag, sourceWrapper.getId(), sourceWrapper.getUri());
+        NativeIVSPlayerSpec.preloadSource(
+          viewTag,
+          sourceWrapper.getId(),
+          sourceWrapper.getUri()
+        );
       }
 
       return sourceWrapper;
@@ -186,7 +190,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const loadSource = useCallback((source: Source) => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.loadSource(viewTag, source.getId());
       }
@@ -194,7 +198,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const releaseSource = useCallback((source: Source) => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.releaseSource(viewTag, source.getId());
       }
@@ -202,7 +206,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const play = useCallback(() => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.play(viewTag);
       }
@@ -210,7 +214,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const pause = useCallback(() => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.pause(viewTag);
       }
@@ -218,7 +222,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const seekTo = useCallback((value: number) => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.seekTo(viewTag, value);
       }
@@ -226,7 +230,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const setOrigin = useCallback((value: string) => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.setOrigin(viewTag, value);
       }
@@ -234,7 +238,7 @@ const IVSPlayerContainer = React.forwardRef<IVSPlayerRef, Props>(
 
     const togglePip = useCallback(() => {
       const viewTag = findNodeHandle(mediaPlayerRef.current);
-      
+
       if (viewTag != null) {
         NativeIVSPlayerSpec.togglePip(viewTag);
       }
