@@ -7,8 +7,8 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
+      "types": "./src/types/index.d.ts",
+      "default": "./src/index.ts"
     },
     "./package.json": "./package.json"
   },
