@@ -368,10 +368,10 @@ import UIKit
 
   public func preload(id: Int, url: NSString) {
     let url = URL(string: url as String)
-    // if let url = url {
-    //   player.load(url)
-    //   preloadSourceMap[id] = Source(id: id, uri: url)
-    // }
+    if let url = url {
+      player.load(url)
+      preloadSourceMap[id] = Source(id: id, uri: url)
+    }
   }
 
   public func loadSource(id: Int) {

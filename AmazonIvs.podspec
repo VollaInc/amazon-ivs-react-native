@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,cpp,swift}"
   s.private_header_files = "ios/**/*.h"
 
-  s.dependency "AmazonIVSPlayer", "1.47.0"
+  s.dependency "AmazonIVSPlayer", "1.46.0"
   install_modules_dependencies(s)
 end
